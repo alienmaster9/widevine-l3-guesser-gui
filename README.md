@@ -1,0 +1,1 @@
+Is a modified version of the orginal extension, it stores all the keys for each website separately, only adds nonexistent keys to the key list, all keys remain saved even if you close the browser, and you can download the entire list as json file.
