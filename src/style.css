@@ -1,0 +1,214 @@
+/* CSS reset ---------------------------------------------------------------- */
+body, div, p, img,
+form, input, button {
+    padding: 0;
+    margin: 0;
+    font: inherit
+}
+
+input {
+    font-family: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+    background-color: #FFF
+}
+
+img, iframe {
+    border: 0;
+    vertical-align: middle
+}
+
+.clear {
+    clear: both
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0
+}
+
+* {
+    box-sizing: border-box
+}
+
+:focus {
+    outline-color: #0A2BED
+}
+/* Fim CSS reset ------------------------------------------------------------ */
+
+
+body {
+    margin: 0;
+    padding: 5px;
+    width: 511px;
+    font: 13px droid sans, segoe ui, ubuntu, arial, sans serif
+}
+
+#main {
+    display: block
+}
+
+#json {
+    display: none
+}
+
+#loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #FFF;
+    opacity: .8
+}
+
+#type {
+    padding: 3px;
+    margin: 2px 0 10px 10px;
+    width: 25px;
+    height: 25px;
+    float: left;
+    color: #888;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none
+}
+
+#type.localstorage {
+    background-color: #FFEB3B;
+    border: 1px solid #FFEB3B
+}
+
+#type.sessionstorage {
+    background-color: #B2FF59;
+    border: 1px solid #B2FF59
+}
+
+#buttons {
+    margin-left: 35px;
+    float: left
+}
+
+button {
+    padding: 4px 18px;
+    margin: 2px 0 10px 10px;
+    box-shadow: inset 0px 1px 0px 0px #ffffff;
+    background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+    border-radius: 3px;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    color: #555;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffffff
+}
+
+button:hover {
+    background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+}
+
+button:active {
+    position: relative;
+    top: 1px
+}
+
+button:focus {
+    outline: none
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+th {
+    padding: 5px;
+    font-weight: normal;
+}
+
+table.localstorage th {
+    background-color: #FFF59D
+}
+
+table.sessionstorage th {
+    background-color: #CCFF90
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 7px;
+    border: 0
+}
+
+th, td {
+    border: 1px solid #DDD
+}
+
+.td-nome {
+    width: 250px
+}
+
+.td-value {
+    width: 250px
+}
+
+.td-icon {
+    width: 30px;
+    text-align: center
+}
+
+td.td-icon {
+    cursor: pointer
+}
+
+p {
+    font-size: 15px;
+    font-style: italic
+}
+
+p.localstorage {
+    color: #E65100
+}
+
+p.sessionstorage {
+    color: #33691E
+}
+
+p.error {
+    color: #d50000
+}
+
+#back {
+    position: fixed;
+    top: 2px;
+    right: 2px
+}
+
+#code {
+    margin-top: 30px;
+    white-space: pre-wrap;
+    word-wrap: break-word
+}
+
+.string {
+    color: #DF0101
+}
+
+.number {
+    color: #0B610B
+}
+
+.boolean {
+    color: #5F04B4
+}
+
+.null {
+    color: #FF8000
+}
+
+.key {
+    color: #0000FF
+}
