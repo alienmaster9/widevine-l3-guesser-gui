@@ -4,10 +4,8 @@
   "short_name": "WidevineGuesser",
   "description": "Guesses at session key input and logs media keys from websites that use Widevine DRM",
   "version": "1.0.0",
-  "permissions": ["activeTab"],
-  "icons":
-  {
-
+  "permissions": ["activeTab", "webRequest", "webRequestBlocking", "<all_urls>", "http://*/*", "https://*/*"],
+  "icons":  {
   },
   "browser_action": {
         "default_popup": "popup.html"

@@ -1,3 +1,4 @@
+
 function getStorage() {
     var obj = {};
 

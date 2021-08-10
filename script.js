@@ -1,6 +1,52 @@
 (function(window, document, $, chrome) {
 'use strict';
 
+var listeners = {};
+var mpdurl = "";
+chrome.tabs.onActivated.addListener( function(info) {
+	var tabId = info.tabId;
+	if (Object.keys(listeners).length === 0) {
+		listeners[tabId] = function(details) {
+            if(details.url.indexOf(".mpd") != -1){
+			   console.info("URL :" + details.url);
+			   mpdurl = details.url;
+			}
+        };
+        chrome.webRequest.onBeforeRequest.addListener(listeners[tabId], {
+            urls: ['<all_urls>'],
+            tabId: tabId
+        }, []);        
+    }
+});
+
+chrome.tabs.onActiveChanged.addListener( function(tabId, info) {
+	for (var x in listeners){
+		if(!listeners[x].hasOwnProperty(tabId)){
+			chrome.webRequest.onBeforeRequest.removeListener(listeners[x]);
+			delete listeners[x];
+		} else{
+			listeners[tabId] = function(details) {
+				if(details.url.indexOf(".mpd") != -1){
+				   console.info("URL :" + details.url);
+				   mpdurl = details.url;
+				}
+			};
+			chrome.webRequest.onBeforeRequest.addListener(listeners[tabId], {
+				urls: ['<all_urls>'],
+				tabId: tabId
+			}, []);
+		}
+	}
+});
+
+chrome.tabs.onRemoved.addListener(function(tabId) {
+    if (listeners[tabId]) {
+        chrome.webRequest.onBeforeRequest.removeListener(listeners[tabId]);
+        delete listeners[tabId];
+    }
+});
+
+
 var scrollPosition;
 
 function htmlEscape(str, noQuotes) {

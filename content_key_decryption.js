@@ -13,6 +13,19 @@ function hexToBytes(hex) {
     bytes.push(parseInt(hex.substr(c, 2), 16));
     return bytes;
 }
+mpdurl = "";
+chrome.webRequest.onCompleted.addListener(
+	function(details) {
+		//console.log("resource", details.url);
+		if(details.url.indexOf(".mpd") != -1){
+		   mpdurl =  details.url;
+		}
+
+	}, 
+	{urls: ["<all_urls>"]},
+	["responseHeaders"]
+	
+);
 
 function SaveDataToLocalStorage(data) {
 	if(!data) {
