@@ -13,21 +13,15 @@ function hexToBytes(hex) {
     bytes.push(parseInt(hex.substr(c, 2), 16));
     return bytes;
 }
-mpdurl = "";
-chrome.webRequest.onCompleted.addListener(
-	function(details) {
-		//console.log("resource", details.url);
-		if(details.url.indexOf(".mpd") != -1){
-		   mpdurl =  details.url;
-		}
 
-	}, 
-	{urls: ["<all_urls>"]},
-	["responseHeaders"]
-	
-);
+
+window.getCookie = function(name) {
+  var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  if (match) return match[2];
+}
 
 function SaveDataToLocalStorage(data) {
+	var mpdurl = getCookie("last_mpd");
 	if(!data) {
 		console.error('Console.save: No data')
 		return;
@@ -41,7 +35,7 @@ function SaveDataToLocalStorage(data) {
 	for (var y in data) {
 		var kid = [y];
 		var key = data[y];
-		drm_keys[kid] = key;
+		drm_keys[kid] = [key, mpdurl];
 	}
 	localStorage.setItem('drm_keys', JSON.stringify(drm_keys));
 }

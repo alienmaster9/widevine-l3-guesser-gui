@@ -1,52 +1,6 @@
 (function(window, document, $, chrome) {
 'use strict';
 
-var listeners = {};
-var mpdurl = "";
-chrome.tabs.onActivated.addListener( function(info) {
-	var tabId = info.tabId;
-	if (Object.keys(listeners).length === 0) {
-		listeners[tabId] = function(details) {
-            if(details.url.indexOf(".mpd") != -1){
-			   console.info("URL :" + details.url);
-			   mpdurl = details.url;
-			}
-        };
-        chrome.webRequest.onBeforeRequest.addListener(listeners[tabId], {
-            urls: ['<all_urls>'],
-            tabId: tabId
-        }, []);        
-    }
-});
-
-chrome.tabs.onActiveChanged.addListener( function(tabId, info) {
-	for (var x in listeners){
-		if(!listeners[x].hasOwnProperty(tabId)){
-			chrome.webRequest.onBeforeRequest.removeListener(listeners[x]);
-			delete listeners[x];
-		} else{
-			listeners[tabId] = function(details) {
-				if(details.url.indexOf(".mpd") != -1){
-				   console.info("URL :" + details.url);
-				   mpdurl = details.url;
-				}
-			};
-			chrome.webRequest.onBeforeRequest.addListener(listeners[tabId], {
-				urls: ['<all_urls>'],
-				tabId: tabId
-			}, []);
-		}
-	}
-});
-
-chrome.tabs.onRemoved.addListener(function(tabId) {
-    if (listeners[tabId]) {
-        chrome.webRequest.onBeforeRequest.removeListener(listeners[tabId]);
-        delete listeners[tabId];
-    }
-});
-
-
 var scrollPosition;
 
 function htmlEscape(str, noQuotes) {
@@ -207,8 +161,9 @@ executeScript({ what: 'get', type: type }, function(response) {
         str += '<table class="' + tableClass + '">';
         str += '<thead>';
         str += '<tr>';
-        str += '<th class="td-nome">KID</th>';
-        str += '<th class="td-value" colspan="3">KEY</th>';
+        str += '<th class="td-index">KID</th>';
+        str += '<th class="td-value1">KEY</th>';
+        str += '<th class="td-value2">MPD URL</th>';
         str += '</tr>';
         str += '</thead>';
         str += '<tbody>';
@@ -216,13 +171,17 @@ executeScript({ what: 'get', type: type }, function(response) {
         for (var i in storage) {
             key = htmlEscape(i);
             value = htmlEscape(storage[i]);
-
+			var arrayvalue = value.split(',')
             str += '<tr>';
-            str += '<td class="td-nome"><input type="text" value="';
+            str += '<td class="td-index"><input type="text" value="';
             str += key + '" data-key="' + key + '"></td>';
-            str += '<td class="td-value"><input type="text" value="';
-            str += value + '"></td>';
+            str += '<td class="td-value1"><input type="text" value="';
+            str += arrayvalue[0] + '"></td>';
+			str += '<td class="td-value2"><input type="text" value="';
+            str += arrayvalue[1] + '"></td>';
+			str += '<td class="td-icon open">+</td>';
             str += '</tr>';
+			
 
             size++;
         }
@@ -282,6 +241,14 @@ $('#add').click(function(e) {
 $('#reload').click(function(e) {
     e.preventDefault();
     location.reload();
+});
+
+
+$('#clear').click(function(e) {
+    e.preventDefault();
+    executeScript({ type: type, what: 'clear' }, function() {
+        location.reload();
+    });
 });
 
 
@@ -433,7 +400,7 @@ $('#table').on('click', 'td.td-icon', function() {
 
     else if (icon === 'open') {
         var $siblings = $this.siblings();
-        var $inputValue = $siblings.eq(1).find('input');
+        var $inputValue = $siblings.eq(-1).find('input');
         var value = $inputValue.val();
         var json = parseDeepJSON(value);
 

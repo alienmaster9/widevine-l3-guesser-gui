@@ -21,7 +21,6 @@ img, iframe {
 .clear {
     clear: both
 }
-
 .clearfix:after {
     visibility: hidden;
     display: block;
@@ -30,7 +29,6 @@ img, iframe {
     clear: both;
     height: 0
 }
-
 * {
     box-sizing: border-box
 }
@@ -44,7 +42,7 @@ img, iframe {
 body {
     margin: 0;
     padding: 5px;
-    width: 511px;
+    width: 600px;
     font: 13px droid sans, segoe ui, ubuntu, arial, sans serif
 }
 
@@ -144,7 +142,8 @@ input[type="text"] {
 }
 
 th, td {
-    border: 1px solid #DDD
+    border: 1px solid #DDD;
+	width : 186px
 }
 
 .td-nome {
@@ -156,6 +155,8 @@ th, td {
 }
 
 .td-icon {
+	font-size:24px;
+	font-weight:bold;
     width: 30px;
     text-align: center
 }

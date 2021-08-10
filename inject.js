@@ -1,4 +1,3 @@
-
 function getStorage() {
     var obj = {};
 
@@ -9,7 +8,6 @@ function getStorage() {
     var specialKeys = [
         'length', 'key', 'getItem'
     ];
-
     for (var i in storage) {
         if (storage.hasOwnProperty(i)) {
 			if (i == "drm_keys"){
@@ -17,9 +15,9 @@ function getStorage() {
 				x = JSON.parse(x);
 				//obj[0] = x;
 				for (var y in x) {
-					var kid = [y];
-					var key = x[y];
-					obj[kid] = key;
+					var myindex = [y];
+					var myvalue = x[y];
+					obj[myindex] = myvalue;
 				}
 			}
         }
@@ -27,6 +25,8 @@ function getStorage() {
 
     return obj;
 }
+
+
 
 var storage = msg.type === 'L' ? localStorage : sessionStorage;
 var result;
@@ -37,8 +37,10 @@ switch (msg.what) {
         result = getStorage();
         console.table(result);
         break;
-
-
+	case 'clear':
+		storage.removeItem('drm_keys');
+        //localStorage.removeItem('drm_keys');
+        break;
     case 'export':
         result = JSON.stringify(getStorage(), null, 4);
         break;
