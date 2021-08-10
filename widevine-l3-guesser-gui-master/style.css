@@ -21,7 +21,6 @@ img, iframe {
 .clear {
     clear: both
 }
-
 .clearfix:after {
     visibility: hidden;
     display: block;
